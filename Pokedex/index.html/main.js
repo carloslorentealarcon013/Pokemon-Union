@@ -1,0 +1,444 @@
+// ============================================
+// 1️⃣ CONTENEDORES - Elementos del HTML
+// ============================================
+const pokedexTimeline = document.getElementById('pokedex-timeline');
+const descriptionText = document.getElementById('description-text');
+
+// ============================================
+// 2️⃣ COLORES POR TIPO
+// ============================================
+const tipoColores = {
+    fire: "#F08030",
+    water: "#6890F0",
+    grass: "#78C850",
+    electric: "#F8D030",
+    bug: "#A8B820",
+    normal: "#A8A878",
+    poison: "#A040A0",
+    ground: "#E0C068",
+    fairy: "#EE99AC",
+    fighting: "#C03028",
+    psychic: "#F85888",
+    rock: "#B8A038",
+    ghost: "#705898",
+    ice: "#98D8D8",
+    dragon: "#7038F8",
+    dark: "#705848",
+    steel: "#B8B8D0",
+    flying: "#A890F0"
+};
+
+// ============================================
+// 3️⃣ FUNCIÓN: Obtener color de un tipo
+// ============================================
+function tipoColor(tipo) {
+    return tipoColores[tipo] || "#A8A878";
+}
+
+// ============================================
+// 4️⃣ FUNCIÓN: Traer UN Pokémon de la API
+// ============================================
+async function fetchPokemon(name) {
+    try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log('Error trayendo Pokémon:', error);
+        return null;
+    }
+}
+
+// ============================================
+// 5️⃣ FUNCIÓN: Traer descripción del Pokémon
+// ============================================
+async function fetchPokemonDescription(pokemon) {
+    // Si es un objeto Pokémon custom, retornar descripción default
+    if (typeof pokemon === 'object' && pokemon.name === 'lerxor') {
+        return 'Un Pokémon misterioso con poderes eléctricos y acuáticos.';
+    }
+    
+    const name = typeof pokemon === 'string' ? pokemon : pokemon.name;
+    try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+        const data = await res.json();
+        const entry = data.flavor_text_entries.find(e => e.language.name === 'en');
+        return entry ? entry.flavor_text.replace(/\n|\f/g, ' ') : 'Sin descripción';
+    } catch (error) {
+        console.log('Error trayendo descripción:', error);
+        return 'Sin descripción';
+    }
+}
+
+// ============================================
+// 6️⃣ FUNCIÓN: Traer datos de la especie
+// ============================================
+async function fetchPokemonSpecies(name) {
+    try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.log('Error trayendo especie:', error);
+        return null;
+    }
+}
+
+// ============================================
+// 7️⃣ FUNCIÓN: Mostrar una línea de evolución
+// ============================================
+async function mostrarLineaEvolucion(evolutionChain) {
+    const evolutionLineDiv = document.createElement('div');
+    evolutionLineDiv.classList.add('evolution-line');
+
+    for (let i = 0; i < evolutionChain.length; i++) {
+        const pokemon = evolutionChain[i];
+        const description = await fetchPokemonDescription(pokemon);
+
+        const pokemonCard = document.createElement('div');
+        pokemonCard.classList.add('pokemon-card');
+        
+        // Hacer clickeable
+        pokemonCard.style.cursor = 'pointer';
+        pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
+        
+        pokemonCard.innerHTML = `
+            <h4>${pokemon.name.toUpperCase()} (#${String(pokemon.id).padStart(3, '0')})</h4>
+            <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+            <div class="types">
+                ${pokemon.types
+                    .map(t => 
+                        `<span style="background-color:${tipoColor(t.type.name)}">${t.type.name.toUpperCase()}</span>`
+                    )
+                    .join('')}
+            </div>
+            <div class="pokedex-entry">${description}</div>
+        `;
+        
+        evolutionLineDiv.appendChild(pokemonCard);
+
+        if (i < evolutionChain.length - 1) {
+            const arrowDiv = document.createElement('div');
+            arrowDiv.classList.add('arrow');
+            arrowDiv.innerText = '→';
+            evolutionLineDiv.appendChild(arrowDiv);
+        }
+    }
+
+    pokedexTimeline.appendChild(evolutionLineDiv);
+    
+    const separator = document.createElement('div');
+    separator.classList.add('separator');
+    pokedexTimeline.appendChild(separator);
+}
+
+// ============================================
+// 8️⃣ FUNCIÓN: Cargar todos los Pokémon
+// ============================================
+async function cargarPokemons() {
+    console.log('⏳ Cargando Pokémon...');
+
+    const bulbasaur = await fetchPokemon('bulbasaur');
+    const ivysaur = await fetchPokemon('ivysaur');
+    const venusaur = await fetchPokemon('venusaur');
+    await mostrarLineaEvolucion([bulbasaur, ivysaur, venusaur]);
+
+    const charmander = await fetchPokemon('charmander');
+    const charmeleon = await fetchPokemon('charmeleon');
+    const charizard = await fetchPokemon('charizard');
+    await mostrarLineaEvolucion([charmander, charmeleon, charizard]);
+
+    const psyduck = await fetchPokemon('psyduck');
+    await mostrarLineaEvolucion([psyduck]);
+
+    // CUARTA LÍNEA: Squirtle → Wartortle → Blastoise
+    const squirtle = await fetchPokemon('squirtle');
+    const wartortle = await fetchPokemon('wartortle');
+    const blastoise = await fetchPokemon('blastoise');
+    await mostrarLineaEvolucion([squirtle, wartortle, blastoise]);
+
+    // QUINTA LÍNEA: Pikachu → Raichu
+    const pikachu = await fetchPokemon('pikachu');
+    const raichu = await fetchPokemon('raichu');
+    await mostrarLineaEvolucion([pikachu, raichu]);
+
+    // SEXTA LÍNEA: Abra → Kadabra → Alakazam
+    const abra = await fetchPokemon('abra');
+    const kadabra = await fetchPokemon('kadabra');
+    const alakazam = await fetchPokemon('alakazam');
+    await mostrarLineaEvolucion([abra, kadabra, alakazam]);
+
+    // SÉPTIMA LÍNEA: Gastly → Haunter → Gengar
+    const gastly = await fetchPokemon('gastly');
+    const haunter = await fetchPokemon('haunter');
+    const gengar = await fetchPokemon('gengar');
+    await mostrarLineaEvolucion([gastly, haunter, gengar]);
+
+    // OCTAVA LÍNEA: Lerxor (Pokémon personalizado)
+    const lerxor = {
+        id: 999,
+        name: 'lerxor',
+        height: 15,
+        weight: 450,
+        sprites: {
+            front_default: '../images_pokemon/Lerxor-removebg-preview.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Lerxor-removebg-preview.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 87 },
+            { stat: { name: 'defense' }, base_stat: 79 },
+            { stat: { name: 'special-attack' }, base_stat: 80 },
+            { stat: { name: 'special-defense' }, base_stat: 83 },
+            { stat: { name: 'speed' }, base_stat: 85 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ]
+    };
+    await mostrarLineaEvolucion([lerxor]);
+
+    // NOVENA LÍNEA: Solo Jigglypuff (sin evolución)
+    const jigglypuff = await fetchPokemon('jigglypuff');
+    await mostrarLineaEvolucion([jigglypuff]);
+
+    console.log('✅ Pokémon cargados!');
+}
+
+// ============================================
+// 9️⃣ INICIAR TODO CUANDO LA PÁGINA CARGUE
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Página lista, iniciando carga...');
+    cargarPokemons();
+    
+    // Cerrar modal al hacer click fuera del contenido (en el fondo oscuro)
+    const modal = document.getElementById('pokemon-modal');
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    });
+});
+
+// ============================================
+// 1️⃣0️⃣ FUNCIÓN: Abrir modal con detalles
+// ============================================
+async function abrirDetallesPokemon(pokemonData) {
+    console.log('🔍 Abriendo detalles de:', pokemonData);
+    
+    // Si es un objeto Pokémon custom (Lerxor), usarlo directamente
+    if (typeof pokemonData === 'object' && pokemonData.name === 'lerxor') {
+        llenarModal(pokemonData, null);
+        document.getElementById('pokemon-modal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        return;
+    }
+    
+    const pokemonName = typeof pokemonData === 'string' ? pokemonData : pokemonData.name;
+    const pokemon = await fetchPokemon(pokemonName);
+    const species = await fetchPokemonSpecies(pokemonName);
+    
+    if (!pokemon || !species) {
+        console.error('Error cargando datos del Pokémon');
+        return;
+    }
+
+    llenarModal(pokemon, species);
+    document.getElementById('pokemon-modal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+// ============================================
+// 1️⃣1️⃣ FUNCIÓN: Llenar el modal con datos
+// ============================================
+function llenarModal(pokemon, species) {
+    const imgUrl = pokemon.sprites.other['official-artwork'].front_default || 
+        pokemon.sprites.front_default;
+    
+    document.getElementById('modal-pokemon-img').src = imgUrl;
+
+    const tipo = pokemon.types[0].type.name;
+    
+    // Para Pokémon custom como Lerxor
+    if (!species) {
+        document.getElementById('modal-intro-text').textContent = 
+            `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} es un Pokémon misterioso de tipo ${tipo.toUpperCase()}.`;
+    } else {
+        const generacion = species.generation.name.replace('generation-', 'Generación ').replace('generation', 'Generación');
+        document.getElementById('modal-intro-text').textContent = 
+            `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} es un Pokémon de tipo ${tipo.toUpperCase()} introducido en ${generacion}.`;
+    }
+
+    document.getElementById('modal-number').textContent = 
+        String(pokemon.id).padStart(4, '0');
+    
+    document.getElementById('modal-types').innerHTML = 
+        pokemon.types.map(t => 
+            `<span style="background-color:${tipoColor(t.type.name)}; padding:5px 10px; border-radius:5px; color:white;">${t.type.name.toUpperCase()}</span>`
+        ).join(' ');
+
+    document.getElementById('modal-species').textContent = 
+        species ? (species.genera.find(g => g.language.name === 'en')?.genus || 'Unknown') : 'Pokémon Personalizado';
+
+    document.getElementById('modal-height').textContent = 
+        `${pokemon.height / 10} m`;
+
+    document.getElementById('modal-weight').textContent = 
+        `${pokemon.weight / 10} kg`;
+
+    const abilities = pokemon.abilities
+        .map(a => {
+            const hidden = a.is_hidden ? ' (Oculta)' : '';
+            return a.ability.name.charAt(0).toUpperCase() + a.ability.name.slice(1) + hidden;
+        })
+        .join(', ');
+    document.getElementById('modal-abilities').textContent = abilities;
+
+    document.getElementById('modal-ev-yield').textContent = 
+        pokemon.stats.map(s => `${s.base_stat} ${s.stat.name}`).join(', ') || 'None';
+    
+    document.getElementById('modal-catch-rate').textContent = 
+        species ? species.capture_rate + '%' : 'Desconocida';
+    
+    document.getElementById('modal-friendship').textContent = 
+        species ? (species.base_happiness || 'Desconocida') : 'Desconocida';
+    
+    document.getElementById('modal-base-exp').textContent = 
+        pokemon.base_experience || 'Desconocida';
+    
+    document.getElementById('modal-growth-rate').textContent = 
+        species ? species.growth_rate.name.replace('-', ' ').charAt(0).toUpperCase() + species.growth_rate.name.replace('-', ' ').slice(1) : 'Desconocida';
+
+    document.getElementById('modal-egg-groups').textContent = 
+        species ? species.egg_groups.map(g => g.name.toUpperCase()).join(', ') : 'Desconocida';
+    
+    if (species) {
+        const maleFemaleRatio = species.gender_rate;
+        let genderText = 'Sin género';
+        if (maleFemaleRatio !== -1) {
+            const femalePercent = (maleFemaleRatio / 8) * 100;
+            const malePercent = 100 - femalePercent;
+            genderText = `${malePercent.toFixed(1)}% Macho / ${femalePercent.toFixed(1)}% Hembra`;
+        }
+        document.getElementById('modal-gender').textContent = genderText;
+        
+        document.getElementById('modal-egg-cycles').textContent = 
+            `${species.hatch_counter} ciclos`;
+    } else {
+        document.getElementById('modal-gender').textContent = 'Desconocida';
+        document.getElementById('modal-egg-cycles').textContent = 'Desconocida';
+    }
+
+    llenarStats(pokemon);
+}
+
+// ============================================
+// 1️⃣2️⃣ FUNCIÓN: Llenar las estadísticas
+// ============================================
+function llenarStats(pokemon) {
+    const statsContainer = document.getElementById('modal-stats');
+    statsContainer.innerHTML = '';
+
+    let totalStats = 0;
+
+    pokemon.stats.forEach(stat => {
+        totalStats += stat.base_stat;
+        
+        const statRow = document.createElement('div');
+        statRow.classList.add('stat-row');
+        
+        const percentage = (stat.base_stat / 255) * 100;
+        
+        statRow.innerHTML = `
+            <div class="stat-name">${abreviarStat(stat.stat.name)}</div>
+            <div class="stat-bar-container">
+                <div class="stat-bar" style="width:${percentage}%; background: ${getColorStat(stat.base_stat)};">
+                    ${stat.base_stat}
+                </div>
+            </div>
+        `;
+        
+        statsContainer.appendChild(statRow);
+    });
+
+    const totalRow = document.createElement('div');
+    totalRow.classList.add('stat-row');
+    totalRow.innerHTML = `
+        <div class="stat-name" style="font-size: 1.1em;"><strong>TOTAL</strong></div>
+        <div></div>
+        <div class="stat-value" style="font-size: 1.1em;"><strong>${totalStats}</strong></div>
+    `;
+    statsContainer.appendChild(totalRow);
+}
+
+// ============================================
+// 1️⃣3️⃣ FUNCIÓN: Abreviar nombre de stat
+// ============================================
+function abreviarStat(statName) {
+    const name = statName.toLowerCase();
+    const abreviaturas = {
+        'hp': 'PS',
+        'attack': 'Atq',
+        'defense': 'Def',
+        'special-attack': 'Atq. Esp',
+        'sp. atk': 'Atq. Esp',
+        'sp-atk': 'Atq. Esp',
+        'special-defense': 'Def. Esp',
+        'sp. def': 'Def. Esp',
+        'sp-def': 'Def. Esp',
+        'speed': 'Vel'
+    };
+    return abreviaturas[name] || name;
+}
+
+// ============================================
+// 1️⃣4️⃣ FUNCIÓN: Color según valor de stat
+// ============================================
+function getColorStat(value) {
+    if (value >= 0 && value <= 25) return '#ff6b6b';        // Rojo
+    if (value >= 26 && value <= 49) return '#ffa500';       // Naranja
+    if (value >= 50 && value <= 89) return '#ffd700';       // Amarillo
+    if (value >= 90 && value <= 115) return '#90ee90';      // Verde claro
+    if (value >= 116 && value <= 139) return '#4caf50';     // Verde
+    return '#1fabab';                                        // Celeste
+}
+
+// ============================================
+// 1️⃣4️⃣ FUNCIÓN: Cerrar modal
+// ============================================
+function cerrarModal() {
+    document.getElementById('pokemon-modal').style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restaurar scroll del fondo
+}
+
+// ============================================
+// 1️⃣5️⃣ FUNCIÓN: Mostrar Pokédex
+// ============================================
+function mostrarPokedex() {
+    document.getElementById('description-section').style.display = 'block';
+    document.getElementById('pokedex-timeline').style.display = 'block';
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// ============================================
+// 1️⃣6️⃣ FUNCIÓN: Mostrar Juego (próximamente)
+// ============================================
+function mostrarJuego() {
+    document.getElementById('description-section').style.display = 'none';
+    document.getElementById('pokedex-timeline').style.display = 'none';
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Próximamente: aquí irá el contenido del juego
+    alert('Sección de Juego - ¡Próximamente!');
+}
