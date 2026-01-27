@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Pokédex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Panel superior - encabezado -->
+    <div id="header-panel">
+        <h1>POKÉDEX</h1>
+    </div>
+
+    <!-- Sección de descripción -->
+    <div id="description-section">
+        <h3>Descripción</h3>
+        <p id="description-text">
+            Bienvenido a la Pokédex interactiva. 
+            Explora las cadenas de evolución de tus Pokémon favoritos.
+        </p>
+    </div>
+
+    <!-- Línea divisoria -->
+    <div class="divider"></div>
+
+    <!-- Contenedor para todas las líneas de evolución -->
+    <div id="pokedex-timeline">
+        <!-- Las líneas de evolución se cargarán aquí -->
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>    <!-- MODAL DETALLADO DEL POKÉMON -->
+    <div id="pokemon-modal" class="modal">
+        <div class="modal-content">
+            <!-- Botón cerrar -->
+            <button class="close-btn" onclick="cerrarModal()">&times;</button>
+
+            <!-- PARTE SUPERIOR: Introducción e imagen -->
+            <div class="modal-top">
+                <div class="pokemon-image">
+                    <img id="modal-pokemon-img" src="" alt="">
+                </div>
+                <div class="pokemon-intro">
+                    <p id="modal-intro-text"></p>
+                </div>
+            </div>
+
+            <!-- PARTE CENTRAL: Pokédex data -->
+            <section class="modal-section">
+                <h3>Pokédex data</h3>
+                <div class="pokedex-data">
+                    <div class="data-row">
+                        <span class="label">National Nº</span>
+                        <span class="value" id="modal-number"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Type</span>
+                        <span class="value" id="modal-types"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Species</span>
+                        <span class="value" id="modal-species"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Height</span>
+                        <span class="value" id="modal-height"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Weight</span>
+                        <span class="value" id="modal-weight"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Abilities</span>
+                        <span class="value" id="modal-abilities"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PARTE DERECHA: Training -->
+            <section class="modal-section">
+                <h3>Training</h3>
+                <div class="training-data">
+                    <div class="data-row">
+                        <span class="label">EV yield</span>
+                        <span class="value" id="modal-ev-yield"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Catch rate</span>
+                        <span class="value" id="modal-catch-rate"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Base Friendship</span>
+                        <span class="value" id="modal-friendship"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Base Exp</span>
+                        <span class="value" id="modal-base-exp"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Growth Rate</span>
+                        <span class="value" id="modal-growth-rate"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BREEDING -->
+            <section class="modal-section">
+                <h3>Breeding</h3>
+                <div class="breeding-data">
+                    <div class="data-row">
+                        <span class="label">Egg Groups</span>
+                        <span class="value" id="modal-egg-groups"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Gender</span>
+                        <span class="value" id="modal-gender"></span>
+                    </div>
+                    <div class="data-row">
+                        <span class="label">Egg cycles</span>
+                        <span class="value" id="modal-egg-cycles"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BASE STATS -->
+            <section class="modal-section">
+                <h3>Base stats</h3>
+                <div class="stats-container" id="modal-stats">
+                    <!-- Las stats se generarán con JavaScript -->
+                </div>
+            </section>
+        </div>
+    </div>
