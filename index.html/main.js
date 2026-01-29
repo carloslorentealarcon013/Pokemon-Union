@@ -108,58 +108,121 @@ async function mostrarLineaEvolucion(evolutionChain) {
     evolutionLineDiv.classList.add('evolution-line');
 
     for (let i = 0; i < evolutionChain.length; i++) {
-        const pokemon = evolutionChain[i];
-        const description = await fetchPokemonDescription(pokemon);
+        const element = evolutionChain[i];
+        
+        // Verificar si es una bifurcación (array)
+        if (Array.isArray(element)) {
+            // Crear un contenedor para la bifurcación
+            const bifurcationDiv = document.createElement('div');
+            bifurcationDiv.style.display = 'flex';
+            bifurcationDiv.style.gap = '20px';
+            bifurcationDiv.style.justifyContent = 'center';
+            bifurcationDiv.style.alignItems = 'center';
+            
+            for (const pokemon of element) {
+                const description = await fetchPokemonDescription(pokemon);
+                const pokemonCard = document.createElement('div');
+                pokemonCard.classList.add('pokemon-card');
+                pokemonCard.style.cursor = 'pointer';
+                pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
+                
+                let imgStyle = '';
+                if (pokemon.name === 'lorintrix') {
+                    imgStyle = 'style="width: 110px; height: 110px;"';
+                } else if (pokemon.name === 'lorintrux') {
+                    imgStyle = 'style="width: 110px; height: 110px;"';
+                } else if (pokemon.name === 'lorux') {
+                    imgStyle = 'style="width: 120px; height: 120px;"';
+                } else if (pokemon.name === 'larex') {
+                    imgStyle = 'style="width: 105px; height: 105px;"';
+                } else if (pokemon.name === 'lerxur') {
+                    imgStyle = 'style="width: 110px; height: 110px;"';
+                }
+                
+                pokemonCard.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 10px;"><h4 style="margin: 0;">${pokemon.name.toUpperCase()}</h4><p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">#${String(pokemon.id).padStart(3, '0')}</p></div>
+                    <div class="img-container">
+                        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" ${imgStyle}>
+                    </div>
+                    <div class="types">
+                        ${pokemon.types
+                            .map(t => 
+                                `<span style="background-color:${tipoColor(t.type.name)}">${t.type.name.toUpperCase()}</span>`
+                            )
+                            .join('')}
+                    </div>
+                `;
+                bifurcationDiv.appendChild(pokemonCard);
+            }
+            
+            evolutionLineDiv.appendChild(bifurcationDiv);
+        } else {
+            // Pokémon normal
+            const pokemon = element;
+            const description = await fetchPokemonDescription(pokemon);
 
-        const pokemonCard = document.createElement('div');
-        pokemonCard.classList.add('pokemon-card');
-        
-        // Hacer clickeable
-        pokemonCard.style.cursor = 'pointer';
-        pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
-        
-        // Estílo especial para Shainx, Lerxor y líneas personalizadas pequeñas
-        let imgStyle = '';
-        if (pokemon.name === 'shainx') {
-            imgStyle = 'style="width: 90px; height: 90px;"';
-        } else if (pokemon.name === 'lerxor') {
-            imgStyle = 'style="width: 110px; height: 110px;"';
-        } else if (
-            pokemon.name === 'flamgor' ||
-            pokemon.name === 'flamaser' ||
-            pokemon.name === 'magmaboar' ||
-            pokemon.name === 'sturppied' ||
-            pokemon.name === 'stremeflor' ||
-            pokemon.name === 'reyppied' ||
-            pokemon.name === 'rersea' ||
-            pokemon.name === 'searir' ||
-            pokemon.name === 'kingsea' ||
-            pokemon.name === 'vriniti' ||
-            pokemon.name === 'vrutikai' ||
-            pokemon.name === 'vristakor'
-        ) {
-            imgStyle = 'style="width: 90px; height: 90px;"';
-        } else if (pokemon.name === 'tryeno') {
-            imgStyle = 'style="width: 110px; height: 110px;"';
-        } else if (pokemon.name === 'tryxrud') {
-            imgStyle = 'style="width: 130px; height: 130px;"';
+            const pokemonCard = document.createElement('div');
+            pokemonCard.classList.add('pokemon-card');
+            
+            pokemonCard.style.cursor = 'pointer';
+            pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
+            
+            let imgStyle = '';
+            if (pokemon.name === 'shainx' || pokemon.name === 'nishaix' || pokemon.name === 'shairux') {
+                imgStyle = 'style="width: 90px; height: 90px;"';
+            } else if (pokemon.name === 'lerxor') {
+                imgStyle = 'style="width: 110px; height: 110px;"';
+            } else if (pokemon.name === 'lorintrix') {
+                imgStyle = 'style="width: 110px; height: 110px;"';
+            } else if (pokemon.name === 'lorintrux') {
+                imgStyle = 'style="width: 110px; height: 110px;"';
+            } else if (pokemon.name === 'lorux') {
+                imgStyle = 'style="width: 120px; height: 120px;"';
+            } else if (pokemon.name === 'larex') {
+                imgStyle = 'style="width: 105px; height: 105px;"';
+            } else if (pokemon.name === 'lerxur') {
+                imgStyle = 'style="width: 110px; height: 110px;"';
+            } else if (
+                pokemon.name === 'lorintrix' ||
+                pokemon.name === 'flamgor' ||
+                pokemon.name === 'flamaser' ||
+                pokemon.name === 'magmaboar' ||
+                pokemon.name === 'sturppied' ||
+                pokemon.name === 'stremeflor' ||
+                pokemon.name === 'reyppied' ||
+                pokemon.name === 'rersea' ||
+                pokemon.name === 'searir' ||
+                pokemon.name === 'kingsea' ||
+                pokemon.name === 'tarrek' ||
+                pokemon.name === 'tareki' ||
+                pokemon.name === 'taricon' ||
+                pokemon.name === 'vriniti' ||
+                pokemon.name === 'vrutikai' ||
+                pokemon.name === 'vristakor'
+            ) {
+                imgStyle = 'style="width: 90px; height: 90px;"';
+            } else if (pokemon.name === 'tryeno') {
+                imgStyle = 'style="width: 110px; height: 110px;"';
+            } else if (pokemon.name === 'tryxrud') {
+                imgStyle = 'style="width: 130px; height: 130px;"';
+            }
+            
+            pokemonCard.innerHTML = `
+                <div style="text-align: center; margin-bottom: 10px;"><h4 style="margin: 0;">${pokemon.name.toUpperCase()}</h4><p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">#${String(pokemon.id).padStart(3, '0')}</p></div>
+                <div class="img-container">
+                    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" ${imgStyle}>
+                </div>
+                <div class="types">
+                    ${pokemon.types
+                        .map(t => 
+                            `<span style="background-color:${tipoColor(t.type.name)}">${t.type.name.toUpperCase()}</span>`
+                        )
+                        .join('')}
+                </div>
+            `;
+            
+            evolutionLineDiv.appendChild(pokemonCard);
         }
-        
-        pokemonCard.innerHTML = `
-            <div style="text-align: center; margin-bottom: 10px;"><h4 style="margin: 0;">${pokemon.name.toUpperCase()}</h4><p style="font-size: 0.85em; color: #666; margin: 5px 0 0 0;">#${String(pokemon.id).padStart(3, '0')}</p></div>
-            <div class="img-container">
-                <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" ${imgStyle}>
-            </div>
-            <div class="types">
-                ${pokemon.types
-                    .map(t => 
-                        `<span style="background-color:${tipoColor(t.type.name)}">${t.type.name.toUpperCase()}</span>`
-                    )
-                    .join('')}
-            </div>
-        `;
-        
-        evolutionLineDiv.appendChild(pokemonCard);
 
         if (i < evolutionChain.length - 1) {
             const arrowDiv = document.createElement('div');
@@ -513,7 +576,97 @@ async function cargarPokemons() {
     };
     await mostrarLineaEvolucion([tryeno, tryxrud]);
 
-    // QUINTA LÍNEA: Vriniti → Vrutikai → Vristakor
+    // QUINTA LÍNEA: Tarrék → Tarekí → Taricón
+    const tarrek = {
+        id: 12,
+        name: 'tarrek',
+        height: 6,
+        weight: 25,
+        sprites: {
+            front_default: '../images_pokemon/Tarrék.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Tarrék.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'normal' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 25 },
+            { stat: { name: 'attack' }, base_stat: 28 },
+            { stat: { name: 'defense' }, base_stat: 31 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 15 },
+            { stat: { name: 'speed' }, base_stat: 30 }
+        ],
+        abilities: [
+            { ability: { name: 'keen-eye' }, is_hidden: false }
+        ],
+        base_experience: 39
+    };
+    const tareki = {
+        id: 13,
+        name: 'tareki',
+        height: 10,
+        weight: 52,
+        sprites: {
+            front_default: '../images_pokemon/Tarekí.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Tarekí.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'normal' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 45 },
+            { stat: { name: 'attack' }, base_stat: 48 },
+            { stat: { name: 'defense' }, base_stat: 41 },
+            { stat: { name: 'special-attack' }, base_stat: 65 },
+            { stat: { name: 'special-defense' }, base_stat: 35 },
+            { stat: { name: 'speed' }, base_stat: 40 }
+        ],
+        abilities: [
+            { ability: { name: 'keen-eye' }, is_hidden: false }
+        ],
+        base_experience: 115
+    };
+    const taricon = {
+        id: 14,
+        name: 'taricon',
+        height: 16,
+        weight: 95,
+        sprites: {
+            front_default: '../images_pokemon/Taricón.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Taricón.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'normal' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 62 },
+            { stat: { name: 'attack' }, base_stat: 68 },
+            { stat: { name: 'defense' }, base_stat: 71 },
+            { stat: { name: 'special-attack' }, base_stat: 95 },
+            { stat: { name: 'special-defense' }, base_stat: 55 },
+            { stat: { name: 'speed' }, base_stat: 70 }
+        ],
+        abilities: [
+            { ability: { name: 'keen-eye' }, is_hidden: false }
+        ],
+        base_experience: 220
+    };
+    await mostrarLineaEvolucion([tarrek, tareki, taricon]);
+
+    // SEXTA LÍNEA: Vriniti → Vrutikai → Vristakor
     const vriniti = {
         id: 22,
         name: 'vriniti',
@@ -603,35 +756,219 @@ async function cargarPokemons() {
     };
     await mostrarLineaEvolucion([vriniti, vrutikai, vristakor]);
 
-    const psyduck = await fetchPokemon('psyduck');
-    await mostrarLineaEvolucion([psyduck]);
+    // SEXTA LÍNEA: Shainx → Nishaix → Shairux
+    const shainx = {
+        id: 62,
+        name: 'shainx',
+        height: 5,
+        weight: 22,
+        sprites: {
+            front_default: '../images_pokemon/Shainx.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Shainx.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 45 },
+            { stat: { name: 'attack' }, base_stat: 75 },
+            { stat: { name: 'defense' }, base_stat: 35 },
+            { stat: { name: 'special-attack' }, base_stat: 34 },
+            { stat: { name: 'special-defense' }, base_stat: 32 },
+            { stat: { name: 'speed' }, base_stat: 42 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 58
+    };
+    const nishaix = {
+        id: 63,
+        name: 'nishaix',
+        height: 9,
+        weight: 48,
+        sprites: {
+            front_default: '../images_pokemon/Nishaix.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Nishaix.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 95 },
+            { stat: { name: 'defense' }, base_stat: 55 },
+            { stat: { name: 'special-attack' }, base_stat: 54 },
+            { stat: { name: 'special-defense' }, base_stat: 52 },
+            { stat: { name: 'speed' }, base_stat: 62 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 145
+    };
+    const shairux = {
+        id: 64,
+        name: 'shairux',
+        height: 14,
+        weight: 85,
+        sprites: {
+            front_default: '../images_pokemon/Shairux.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Shairux.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 95 },
+            { stat: { name: 'attack' }, base_stat: 125 },
+            { stat: { name: 'defense' }, base_stat: 75 },
+            { stat: { name: 'special-attack' }, base_stat: 74 },
+            { stat: { name: 'special-defense' }, base_stat: 72 },
+            { stat: { name: 'speed' }, base_stat: 82 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 235
+    };
+    await mostrarLineaEvolucion([shainx, nishaix, shairux]);
 
-    // CUARTA LÍNEA: Squirtle → Wartortle → Blastoise
-    const squirtle = await fetchPokemon('squirtle');
-    const wartortle = await fetchPokemon('wartortle');
-    const blastoise = await fetchPokemon('blastoise');
-    await mostrarLineaEvolucion([squirtle, wartortle, blastoise]);
-
-    // QUINTA LÍNEA: Pikachu → Raichu
-    const pikachu = await fetchPokemon('pikachu');
-    const raichu = await fetchPokemon('raichu');
-    await mostrarLineaEvolucion([pikachu, raichu]);
-
-    // SEXTA LÍNEA: Abra → Kadabra → Alakazam
-    const abra = await fetchPokemon('abra');
-    const kadabra = await fetchPokemon('kadabra');
-    const alakazam = await fetchPokemon('alakazam');
-    await mostrarLineaEvolucion([abra, kadabra, alakazam]);
-
-    // SÉPTIMA LÍNEA: Gastly → Haunter → Gengar
-    const gastly = await fetchPokemon('gastly');
-    const haunter = await fetchPokemon('haunter');
-    const gengar = await fetchPokemon('gengar');
-    await mostrarLineaEvolucion([gastly, haunter, gengar]);
-
-    // OCTAVA LÍNEA: Lerxor (Pokémon personalizado)
+    // OCTAVA LÍNEA: Lorintrix → Lorux/Larex → Lerxor (bifurcación)
+    const lorintrix = {
+        id: 171,
+        name: 'lorintrix',
+        height: 4,
+        weight: 12,
+        sprites: {
+            front_default: '../images_pokemon/Lorintrix.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Lorintrix.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 45 },
+            { stat: { name: 'attack' }, base_stat: 45 },
+            { stat: { name: 'defense' }, base_stat: 45 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 45 },
+            { stat: { name: 'speed' }, base_stat: 45 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 52
+    };
+    const lorintrux = {
+        id: 168,
+        name: 'lorintrux',
+        height: 6,
+        weight: 18,
+        sprites: {
+            front_default: '../images_pokemon/Lorintrux.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Lorintrux.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 45 },
+            { stat: { name: 'attack' }, base_stat: 45 },
+            { stat: { name: 'defense' }, base_stat: 45 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 45 },
+            { stat: { name: 'speed' }, base_stat: 45 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 100
+    };
+    const lorux = {
+        id: 169,
+        name: 'lorux',
+        height: 10,
+        weight: 45,
+        sprites: {
+            front_default: '../images_pokemon/Lorux.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Lorux.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 82 },
+            { stat: { name: 'attack' }, base_stat: 94 },
+            { stat: { name: 'defense' }, base_stat: 71 },
+            { stat: { name: 'special-attack' }, base_stat: 65 },
+            { stat: { name: 'special-defense' }, base_stat: 93 },
+            { stat: { name: 'speed' }, base_stat: 55 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 156
+    };
+    const larex = {
+        id: 172,
+        name: 'larex',
+        height: 10,
+        weight: 48,
+        sprites: {
+            front_default: '../images_pokemon/Larex.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Larex.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 65 },
+            { stat: { name: 'attack' }, base_stat: 67 },
+            { stat: { name: 'defense' }, base_stat: 88 },
+            { stat: { name: 'special-attack' }, base_stat: 85 },
+            { stat: { name: 'special-defense' }, base_stat: 73 },
+            { stat: { name: 'speed' }, base_stat: 87 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 156
+    };
     const lerxor = {
-        id: 999,
+        id: 173,
         name: 'lerxor',
         height: 15,
         weight: 450,
@@ -650,45 +987,51 @@ async function cargarPokemons() {
         stats: [
             { stat: { name: 'hp' }, base_stat: 75 },
             { stat: { name: 'attack' }, base_stat: 87 },
-            { stat: { name: 'defense' }, base_stat: 79 },
-            { stat: { name: 'special-attack' }, base_stat: 80 },
+            { stat: { name: 'defense' }, base_stat: 110 },
+            { stat: { name: 'special-attack' }, base_stat: 104 },
             { stat: { name: 'special-defense' }, base_stat: 83 },
-            { stat: { name: 'speed' }, base_stat: 85 }
+            { stat: { name: 'speed' }, base_stat: 95 }
         ],
         abilities: [
             { ability: { name: 'static' }, is_hidden: false }
-        ]
+        ],
+        base_experience: 238
     };
-    await mostrarLineaEvolucion([lerxor]);
-
-    // NOVENA LÍNEA: Solo Jigglypuff (sin evolución)
-    const jigglypuff = await fetchPokemon('jigglypuff');
-    await mostrarLineaEvolucion([jigglypuff]);
-
-    // DÉCIMA LÍNEA: Shainx → Luxio → Luxray
-    // Shainx es un Pokémon personalizado basado en Shinx
-    const shinxData = await fetchPokemon('shinx');
-    const shainx = {
-        id: shinxData.id,
-        name: 'shainx',
-        height: shinxData.height,
-        weight: shinxData.weight,
+    const lerxur = {
+        id: 170,
+        name: 'lerxur',
+        height: 15,
+        weight: 420,
         sprites: {
-            front_default: '../images_pokemon/Shainx2k.png',
+            front_default: '../images_pokemon/Lerxur.png',
             other: {
                 'official-artwork': {
-                    front_default: '../images_pokemon/shainx-anime.png'
+                    front_default: '../images_pokemon/Lerxur.png'
                 }
             }
         },
-        types: shinxData.types,
-        stats: shinxData.stats,
-        abilities: shinxData.abilities,
-        base_experience: shinxData.base_experience
+        types: [
+            { type: { name: 'electric' } },
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 90 },
+            { stat: { name: 'attack' }, base_stat: 110 },
+            { stat: { name: 'defense' }, base_stat: 81 },
+            { stat: { name: 'special-attack' }, base_stat: 70 },
+            { stat: { name: 'special-defense' }, base_stat: 105 },
+            { stat: { name: 'speed' }, base_stat: 70 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 238
     };
-    const luxio = await fetchPokemon('luxio');
-    const luxray = await fetchPokemon('luxray');
-    await mostrarLineaEvolucion([shainx, luxio, luxray]);
+    // Línea evolutiva electrico/fuego (pelo rojo)
+    await mostrarLineaEvolucion([lorintrux, lorux, lerxur]);
+    
+    // Línea evolutiva electrico/agua (pelo azul)
+    await mostrarLineaEvolucion([lorintrix, larex, lerxor]);
 
     console.log('✅ Pokémon cargados!');
 }
@@ -716,7 +1059,7 @@ async function abrirDetallesPokemon(pokemonData) {
     console.log('🔍 Abriendo detalles de:', pokemonData);
     
     // Si es un objeto Pokémon custom, usarlo directamente
-    const customPokemons = ['lerxor', 'shainx', 'sturppied', 'stremeflor', 'reyppied', 'flamgor', 'flamaser', 'magmaboar', 'rersea', 'searir', 'kingsea', 'tryeno', 'tryxrud', 'vriniti', 'vrutikai', 'vristakor'];
+    const customPokemons = ['lorintrix', 'lorintrux', 'lorux', 'larex', 'lerxur', 'lerxor', 'shainx', 'nishaix', 'shairux', 'sturppied', 'stremeflor', 'reyppied', 'flamgor', 'flamaser', 'magmaboar', 'rersea', 'searir', 'kingsea', 'tryeno', 'tryxrud', 'tarrek', 'tareki', 'taricon', 'vriniti', 'vrutikai', 'vristakor'];
     
     if (typeof pokemonData === 'object' && customPokemons.includes(pokemonData.name)) {
         // Para Shainx, necesitamos datos de especie de Shinx
