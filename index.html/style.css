@@ -378,72 +378,87 @@ body {
     
     #header-banner {
         margin: -10px -10px 20px -10px;
-        max-height: 250px;
+        max-height: 200px;
+    }
+    
+    #header-panel h1 {
+        font-size: 1.5em;
     }
     
     .nav-btn {
-        padding: 10px 20px;
-        font-size: 0.9em;
+        padding: 8px 15px;
+        font-size: 0.8em;
     }
     
     #description-section {
-        padding: 15px;
-        margin-bottom: 20px;
+        padding: 12px;
+        margin-bottom: 15px;
         border-radius: 8px;
     }
     
     #description-section h3 {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     
     #description-section p {
-        font-size: 0.95em;
+        font-size: 0.85em;
     }
     
     .evolution-line {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 10px 5px;
+        gap: 8px;
+        justify-content: flex-start;
     }
     
     .pokemon-card {
-        width: 140px;
-        height: 280px;
-        padding: 12px;
-        margin: 8px;
+        width: 110px;
+        height: 240px;
+        padding: 10px;
+        margin: 0;
+        flex-shrink: 0;
     }
     
     .pokemon-card h4 {
-        font-size: 0.85em;
-        margin: 8px 0;
+        font-size: 0.75em;
+        margin: 5px 0;
+        word-break: break-word;
     }
     
     .pokemon-card .img-container {
-        height: 110px;
-        margin: 8px 0;
+        height: 90px;
+        margin: 5px 0;
     }
     
     .pokemon-card img {
-        max-width: 110px;
-        max-height: 110px;
+        max-width: 90px;
+        max-height: 90px;
     }
     
     .types span {
-        font-size: 0.7em;
-        padding: 3px 6px;
-        margin: 2px;
+        font-size: 0.65em;
+        padding: 2px 4px;
+        margin: 2px 1px;
     }
     
     .pokedex-entry {
-        font-size: 0.7em;
+        font-size: 0.65em;
+        line-height: 1.2;
     }
     
     .arrow {
-        font-size: 1.5em;
-        margin: 0 5px;
+        font-size: 1.2em;
+        margin: 0 3px;
+        padding: 0 5px;
+        flex-shrink: 0;
+        align-self: center;
     }
     
     .separator {
-        margin: 15px 0;
+        margin: 10px 0;
+        height: 2px;
     }
     
     .modal-top {
@@ -452,17 +467,22 @@ body {
     
     .pokemon-image img {
         width: 100%;
-        max-width: 200px;
+        max-width: 180px;
     }
     
     .modal-content {
         max-height: 90vh;
-        padding: 20px;
+        padding: 15px;
         width: 95%;
+        max-width: 100%;
     }
     
     .modal-section h3 {
-        font-size: 1.1em;
+        font-size: 1em;
+    }
+    
+    .data-row {
+        font-size: 0.85em;
     }
 }
 
@@ -474,8 +494,8 @@ body {
     }
     
     .pokemon-card {
-        width: 155px;
-        height: 290px;
+        width: 135px;
+        height: 275px;
     }
 }
 
