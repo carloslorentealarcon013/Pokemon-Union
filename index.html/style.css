@@ -147,6 +147,11 @@ body {
     margin: 10px 0;
     font-size: 0.9em;
     color: #333;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.1;
 }
 
 .pokemon-card .img-container {
@@ -166,6 +171,12 @@ body {
 /* ============ TIPOS ============ */
 .types {
     margin: 8px 0;
+    margin-top: auto;
+    min-height: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 }
 
 .pokedex-entry {
