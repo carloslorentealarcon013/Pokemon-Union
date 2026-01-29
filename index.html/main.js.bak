@@ -294,27 +294,7 @@ async function cargarPokemons() {
     };
     const flamaser = {
         id: 5,
-        name: 'flamaser',
-        height: 11,
-        weight: 90,
-        sprites: {
-            front_default: '../images_pokemon/Flamaser.png',
-            other: {
-                'official-artwork': {
-                    front_default: '../images_pokemon/Flamaser2k.png'
-                }
-            }
-        },
-        types: [
-            { type: { name: 'fire' } }
-        ],
-        stats: [
-            { stat: { name: 'hp' }, base_stat: 90 },
-            { stat: { name: 'attack' }, base_stat: 87 },
-            { stat: { name: 'defense' }, base_stat: 60 },
-            { stat: { name: 'special-attack' }, base_stat: 77 },
-            { stat: { name: 'special-defense' }, base_stat: 60 },
-            { stat: { name: 'speed' }, base_stat: 50 }
+        $150 }
         ],
         abilities: [
             { ability: { name: 'blaze' }, is_hidden: false }
@@ -323,27 +303,7 @@ async function cargarPokemons() {
     };
     const magmaboar = {
         id: 6,
-        name: 'magmaboar',
-        height: 16,
-        weight: 150,
-        sprites: {
-            front_default: '../images_pokemon/Magmaboar.png',
-            other: {
-                'official-artwork': {
-                    front_default: '../images_pokemon/Magmaboar2k.png'
-                }
-            }
-        },
-        types: [
-            { type: { name: 'fire' } }
-        ],
-        stats: [
-            { stat: { name: 'hp' }, base_stat: 115 },
-            { stat: { name: 'attack' }, base_stat: 100 },
-            { stat: { name: 'defense' }, base_stat: 65 },
-            { stat: { name: 'special-attack' }, base_stat: 90 },
-            { stat: { name: 'special-defense' }, base_stat: 65 },
-            { stat: { name: 'speed' }, base_stat: 55 }
+        $155 }
         ],
         abilities: [
             { ability: { name: 'blaze' }, is_hidden: false }
@@ -388,7 +348,7 @@ async function cargarPokemons() {
             front_default: '../images_pokemon/Lerxor2k.png',
             other: {
                 'official-artwork': {
-                    front_default: '../images_pokemon/Lerxor-anime.jpg?v=3'
+                    front_default: '../images_pokemon/Lerxor-anime.png'
                 }
             }
         },
