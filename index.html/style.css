@@ -212,12 +212,14 @@ body {
 
 /* ============ FLECHA DE EVOLUCIÓN ============ */
 .arrow {
-    font-size: 28px;
-    color: #667eea;
+    font-size: 32px;
+    color: #dc2626;
     font-weight: bold;
     min-width: 30px;
     text-align: center;
     flex-shrink: 0;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 0 4px rgba(70, 95, 209, 0.4));
 }
 
 /* ============ SEPARADOR ENTRE LÍNEAS ============ */
@@ -267,7 +269,7 @@ body {
 }
 
 .close-btn:hover {
-    color: #000;
+    color: #dc2626;
 }
 
 /* Top: Imagen e introducción */
@@ -468,15 +470,15 @@ body {
         line-height: 1.2;
     }
     
-    .arrow {
-        font-size: 1.2em;
-        margin: 0 3px;
-        padding: 0 5px;
-        flex-shrink: 0;
-        align-self: center;
-    }
-    
-    .separator {
+.arrow {
+    font-size: 32px;
+    color: #dc2626;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+    flex-shrink: 0;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.3);
+    filter: drop-shadow(0 0 4px rgba(70, 95, 209, 0.4));
         margin: 10px 0;
         height: 2px;
     }
