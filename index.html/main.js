@@ -53,21 +53,37 @@ async function fetchPokemon(name) {
 // 5️⃣ FUNCIÓN: Traer descripción del Pokémon
 // ============================================
 async function fetchPokemonDescription(pokemon) {
-    // Si es un objeto Pokémon custom, retornar descripción default
-    if (typeof pokemon === 'object' && pokemon.name === 'lerxor') {
-        return 'Un Pokémon misterioso con poderes eléctricos y acuáticos.';
-    }
-    
     const name = typeof pokemon === 'string' ? pokemon : pokemon.name;
-    try {
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
-        const data = await res.json();
-        const entry = data.flavor_text_entries.find(e => e.language.name === 'en');
-        return entry ? entry.flavor_text.replace(/\n|\f/g, ' ') : 'Sin descripción';
-    } catch (error) {
-        console.log('Error trayendo descripción:', error);
-        return 'Sin descripción';
-    }
+    
+    // Frases cortas características para cada Pokémon
+    const descriptions = {
+        'bulbasaur': 'Semilla en su espalda',
+        'ivysaur': 'Brote floreciente',
+        'venusaur': 'Flor gigante',
+        'charmander': 'Cola de fuego',
+        'charmeleon': 'Llamas intensas',
+        'charizard': 'Dragón de fuego',
+        'psyduck': 'Siempre confundido',
+        'squirtle': 'Tortuguita acuática',
+        'wartortle': 'Cola peluda',
+        'blastoise': 'Cañones de agua',
+        'pikachu': 'Ratón eléctrico',
+        'raichu': 'Electricidad avanzada',
+        'abra': 'Teleportación constante',
+        'kadabra': 'Poderes psíquicos',
+        'alakazam': 'Inteligencia superior',
+        'gastly': 'Nube de gas',
+        'haunter': 'Fantasma flotante',
+        'gengar': 'Sombra traviesa',
+        'lerxor': 'Poder eléctrico misterioso',
+        'shainx': 'Cachorro brillante',
+        'jigglypuff': 'Canto hipnótico',
+        'shinx': 'Cachorro eléctrico',
+        'luxio': 'Garra brillante',
+        'luxray': 'Vista de rayos X'
+    };
+    
+    return descriptions[name] || 'Pokémon único';
 }
 
 // ============================================
@@ -102,9 +118,19 @@ async function mostrarLineaEvolucion(evolutionChain) {
         pokemonCard.style.cursor = 'pointer';
         pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
         
+        // Estilo especial para Shainx y Lerxor (imágenes personalizadas más pequeñas)
+        let imgStyle = '';
+        if (pokemon.name === 'shainx') {
+            imgStyle = 'style="width: 90px; height: 90px;"';
+        } else if (pokemon.name === 'lerxor') {
+            imgStyle = 'style="width: 110px; height: 110px;"';
+        }
+        
         pokemonCard.innerHTML = `
             <h4>${pokemon.name.toUpperCase()} (#${String(pokemon.id).padStart(3, '0')})</h4>
-            <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+            <div class="img-container">
+                <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" ${imgStyle}>
+            </div>
             <div class="types">
                 ${pokemon.types
                     .map(t => 
@@ -181,10 +207,10 @@ async function cargarPokemons() {
         height: 15,
         weight: 450,
         sprites: {
-            front_default: '../images_pokemon/Lerxor-removebg-preview.png',
+            front_default: '../images_pokemon/Lerxor.png',
             other: {
                 'official-artwork': {
-                    front_default: '../images_pokemon/Lerxor-removebg-preview.png'
+                    front_default: '../images_pokemon/Lerxor-anime.png'
                 }
             }
         },
@@ -209,6 +235,31 @@ async function cargarPokemons() {
     // NOVENA LÍNEA: Solo Jigglypuff (sin evolución)
     const jigglypuff = await fetchPokemon('jigglypuff');
     await mostrarLineaEvolucion([jigglypuff]);
+
+    // DÉCIMA LÍNEA: Shainx → Luxio → Luxray
+    // Shainx es un Pokémon personalizado basado en Shinx
+    const shinxData = await fetchPokemon('shinx');
+    const shainx = {
+        id: shinxData.id,
+        name: 'shainx',
+        height: shinxData.height,
+        weight: shinxData.weight,
+        sprites: {
+            front_default: '../images_pokemon/Shainx.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/shainx-anime.png'
+                }
+            }
+        },
+        types: shinxData.types,
+        stats: shinxData.stats,
+        abilities: shinxData.abilities,
+        base_experience: shinxData.base_experience
+    };
+    const luxio = await fetchPokemon('luxio');
+    const luxray = await fetchPokemon('luxray');
+    await mostrarLineaEvolucion([shainx, luxio, luxray]);
 
     console.log('✅ Pokémon cargados!');
 }
@@ -235,9 +286,15 @@ document.addEventListener('DOMContentLoaded', function() {
 async function abrirDetallesPokemon(pokemonData) {
     console.log('🔍 Abriendo detalles de:', pokemonData);
     
-    // Si es un objeto Pokémon custom (Lerxor), usarlo directamente
-    if (typeof pokemonData === 'object' && pokemonData.name === 'lerxor') {
-        llenarModal(pokemonData, null);
+    // Si es un objeto Pokémon custom (Lerxor o Shainx), usarlo directamente
+    if (typeof pokemonData === 'object' && (pokemonData.name === 'lerxor' || pokemonData.name === 'shainx')) {
+        // Para Shainx, necesitamos datos de especie de Shinx
+        if (pokemonData.name === 'shainx') {
+            const species = await fetchPokemonSpecies('shinx');
+            llenarModal(pokemonData, species);
+        } else {
+            llenarModal(pokemonData, null);
+        }
         document.getElementById('pokemon-modal').style.display = 'block';
         document.body.style.overflow = 'hidden';
         return;
