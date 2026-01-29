@@ -138,7 +138,6 @@ async function mostrarLineaEvolucion(evolutionChain) {
                     )
                     .join('')}
             </div>
-            <div class="pokedex-entry">${description}</div>
         `;
         
         evolutionLineDiv.appendChild(pokemonCard);
@@ -207,7 +206,7 @@ async function cargarPokemons() {
         height: 15,
         weight: 450,
         sprites: {
-            front_default: '../images_pokemon/Lerxor.png',
+            front_default: '../images_pokemon/Lerxor2k.png',
             other: {
                 'official-artwork': {
                     front_default: '../images_pokemon/Lerxor-anime.png'
@@ -245,7 +244,7 @@ async function cargarPokemons() {
         height: shinxData.height,
         weight: shinxData.weight,
         sprites: {
-            front_default: '../images_pokemon/Shainx.png',
+            front_default: '../images_pokemon/Shainx2k.png',
             other: {
                 'official-artwork': {
                     front_default: '../images_pokemon/shainx-anime.png'
