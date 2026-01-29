@@ -369,8 +369,83 @@ body {
     color: #333;
 }
 
-/* Responsive */
+/* Responsive para MÓVIL (hasta 768px) */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+        max-width: 100%;
+    }
+    
+    #header-banner {
+        margin: -10px -10px 20px -10px;
+        max-height: 250px;
+    }
+    
+    .nav-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    
+    #description-section {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+    
+    #description-section h3 {
+        font-size: 1.2em;
+    }
+    
+    #description-section p {
+        font-size: 0.95em;
+    }
+    
+    .evolution-line {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pokemon-card {
+        width: 140px;
+        height: 280px;
+        padding: 12px;
+        margin: 8px;
+    }
+    
+    .pokemon-card h4 {
+        font-size: 0.85em;
+        margin: 8px 0;
+    }
+    
+    .pokemon-card .img-container {
+        height: 110px;
+        margin: 8px 0;
+    }
+    
+    .pokemon-card img {
+        max-width: 110px;
+        max-height: 110px;
+    }
+    
+    .types span {
+        font-size: 0.7em;
+        padding: 3px 6px;
+        margin: 2px;
+    }
+    
+    .pokedex-entry {
+        font-size: 0.7em;
+    }
+    
+    .arrow {
+        font-size: 1.5em;
+        margin: 0 5px;
+    }
+    
+    .separator {
+        margin: 15px 0;
+    }
+    
     .modal-top {
         flex-direction: column;
     }
@@ -378,6 +453,29 @@ body {
     .pokemon-image img {
         width: 100%;
         max-width: 200px;
+    }
+    
+    .modal-content {
+        max-height: 90vh;
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .modal-section h3 {
+        font-size: 1.1em;
+    }
+}
+
+/* Responsive para TABLETS (769px a 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    body {
+        padding: 15px;
+        max-width: 100%;
+    }
+    
+    .pokemon-card {
+        width: 155px;
+        height: 290px;
     }
 }
 
