@@ -118,12 +118,21 @@ async function mostrarLineaEvolucion(evolutionChain) {
         pokemonCard.style.cursor = 'pointer';
         pokemonCard.onclick = () => abrirDetallesPokemon(pokemon);
         
-        // Estilo especial para Shainx y Lerxor (imágenes personalizadas más pequeñas)
+        // Estílo especial para Shainx, Lerxor y líneas personalizadas pequeñas
         let imgStyle = '';
         if (pokemon.name === 'shainx') {
             imgStyle = 'style="width: 90px; height: 90px;"';
         } else if (pokemon.name === 'lerxor') {
             imgStyle = 'style="width: 110px; height: 110px;"';
+        } else if (
+            pokemon.name === 'flamgor' ||
+            pokemon.name === 'flamaser' ||
+            pokemon.name === 'magmaboar' ||
+            pokemon.name === 'sturppied' ||
+            pokemon.name === 'stremeflor' ||
+            pokemon.name === 'reyppied'
+        ) {
+            imgStyle = 'style="width: 90px; height: 90px;"';
         }
         
         pokemonCard.innerHTML = `
@@ -163,15 +172,185 @@ async function mostrarLineaEvolucion(evolutionChain) {
 async function cargarPokemons() {
     console.log('⏳ Cargando Pokémon...');
 
-    const bulbasaur = await fetchPokemon('bulbasaur');
-    const ivysaur = await fetchPokemon('ivysaur');
-    const venusaur = await fetchPokemon('venusaur');
-    await mostrarLineaEvolucion([bulbasaur, ivysaur, venusaur]);
+    // PRIMERA LÍNEA: Sturppied → Stremeflor → Reyppied
+    const sturppied = {
+        id: 1,
+        name: 'sturppied',
+        height: 7,
+        weight: 30,
+        sprites: {
+            front_default: '../images_pokemon/Sturppied.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Sturppied2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 45 },
+            { stat: { name: 'attack' }, base_stat: 45 },
+            { stat: { name: 'defense' }, base_stat: 60 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 60 },
+            { stat: { name: 'speed' }, base_stat: 63 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 64
+    };
+    const stremeflor = {
+        id: 2,
+        name: 'stremeflor',
+        height: 10,
+        weight: 80,
+        sprites: {
+            front_default: '../images_pokemon/Strinkflor.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Strinkflor2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 65 },
+            { stat: { name: 'attack' }, base_stat: 65 },
+            { stat: { name: 'defense' }, base_stat: 80 },
+            { stat: { name: 'special-attack' }, base_stat: 55 },
+            { stat: { name: 'special-defense' }, base_stat: 75 },
+            { stat: { name: 'speed' }, base_stat: 85 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 137
+    };
+    const reyppied = {
+        id: 3,
+        name: 'reyppied',
+        height: 20,
+        weight: 200,
+        sprites: {
+            front_default: '../images_pokemon/Reylour.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Reylour2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 75 },
+            { stat: { name: 'defense' }, base_stat: 100 },
+            { stat: { name: 'special-attack' }, base_stat: 75 },
+            { stat: { name: 'special-defense' }, base_stat: 100 },
+            { stat: { name: 'speed' }, base_stat: 113 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 236
+    };
+    await mostrarLineaEvolucion([sturppied, stremeflor, reyppied]);
 
-    const charmander = await fetchPokemon('charmander');
-    const charmeleon = await fetchPokemon('charmeleon');
-    const charizard = await fetchPokemon('charizard');
-    await mostrarLineaEvolucion([charmander, charmeleon, charizard]);
+    // SEGUNDA LÍNEA: Flamgor → Flamaser → Magmaboar
+    const flamgor = {
+        id: 4,
+        name: 'flamgor',
+        height: 6,
+        weight: 25,
+        sprites: {
+            front_default: '../images_pokemon/Flamgor.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Flamgor2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 65 },
+            { stat: { name: 'attack' }, base_stat: 58 },
+            { stat: { name: 'defense' }, base_stat: 46 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 45 },
+            { stat: { name: 'speed' }, base_stat: 45 }
+        ],
+        abilities: [
+            { ability: { name: 'blaze' }, is_hidden: false }
+        ],
+        base_experience: 62
+    };
+    const flamaser = {
+        id: 5,
+        name: 'flamaser',
+        height: 11,
+        weight: 90,
+        sprites: {
+            front_default: '../images_pokemon/Flamaser.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Flamaser2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 90 },
+            { stat: { name: 'attack' }, base_stat: 87 },
+            { stat: { name: 'defense' }, base_stat: 60 },
+            { stat: { name: 'special-attack' }, base_stat: 77 },
+            { stat: { name: 'special-defense' }, base_stat: 60 },
+            { stat: { name: 'speed' }, base_stat: 60 }
+        ],
+        abilities: [
+            { ability: { name: 'blaze' }, is_hidden: false }
+        ],
+        base_experience: 142
+    };
+    const magmaboar = {
+        id: 6,
+        name: 'magmaboar',
+        height: 16,
+        weight: 150,
+        sprites: {
+            front_default: '../images_pokemon/Magmaboar.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Magmaboar2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'fire' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 115 },
+            { stat: { name: 'attack' }, base_stat: 100 },
+            { stat: { name: 'defense' }, base_stat: 65 },
+            { stat: { name: 'special-attack' }, base_stat: 90 },
+            { stat: { name: 'special-defense' }, base_stat: 65 },
+            { stat: { name: 'speed' }, base_stat: 80 }
+        ],
+        abilities: [
+            { ability: { name: 'blaze' }, is_hidden: false }
+        ],
+        base_experience: 270
+    };
+    await mostrarLineaEvolucion([flamgor, flamaser, magmaboar]);
 
     const psyduck = await fetchPokemon('psyduck');
     await mostrarLineaEvolucion([psyduck]);
@@ -285,13 +464,16 @@ document.addEventListener('DOMContentLoaded', function() {
 async function abrirDetallesPokemon(pokemonData) {
     console.log('🔍 Abriendo detalles de:', pokemonData);
     
-    // Si es un objeto Pokémon custom (Lerxor o Shainx), usarlo directamente
-    if (typeof pokemonData === 'object' && (pokemonData.name === 'lerxor' || pokemonData.name === 'shainx')) {
+    // Si es un objeto Pokémon custom, usarlo directamente
+    const customPokemons = ['lerxor', 'shainx', 'sturppied', 'stremeflor', 'reyppied', 'flamgor', 'flamaser', 'magmaboar'];
+    
+    if (typeof pokemonData === 'object' && customPokemons.includes(pokemonData.name)) {
         // Para Shainx, necesitamos datos de especie de Shinx
         if (pokemonData.name === 'shainx') {
             const species = await fetchPokemonSpecies('shinx');
             llenarModal(pokemonData, species);
         } else {
+            // Para otros Pokémon custom, no mostrar descripción
             llenarModal(pokemonData, null);
         }
         document.getElementById('pokemon-modal').style.display = 'block';
@@ -335,7 +517,7 @@ function llenarModal(pokemon, species) {
     }
 
     document.getElementById('modal-number').textContent = 
-        String(pokemon.id).padStart(4, '0');
+        String(pokemon.id).padStart(3, '0');
     
     document.getElementById('modal-types').innerHTML = 
         pokemon.types.map(t => 
