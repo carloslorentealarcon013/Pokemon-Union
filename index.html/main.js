@@ -130,9 +130,19 @@ async function mostrarLineaEvolucion(evolutionChain) {
             pokemon.name === 'magmaboar' ||
             pokemon.name === 'sturppied' ||
             pokemon.name === 'stremeflor' ||
-            pokemon.name === 'reyppied'
+            pokemon.name === 'reyppied' ||
+            pokemon.name === 'rersea' ||
+            pokemon.name === 'searir' ||
+            pokemon.name === 'kingsea' ||
+            pokemon.name === 'vriniti' ||
+            pokemon.name === 'vrutikai' ||
+            pokemon.name === 'vristakor'
         ) {
             imgStyle = 'style="width: 90px; height: 90px;"';
+        } else if (pokemon.name === 'tryeno') {
+            imgStyle = 'style="width: 110px; height: 110px;"';
+        } else if (pokemon.name === 'tryxrud') {
+            imgStyle = 'style="width: 130px; height: 130px;"';
         }
         
         pokemonCard.innerHTML = `
@@ -352,6 +362,247 @@ async function cargarPokemons() {
     };
     await mostrarLineaEvolucion([flamgor, flamaser, magmaboar]);
 
+    // TERCERA LÍNEA: Rersea → Searir → Kingsea
+    const rersea = {
+        id: 7,
+        name: 'rersea',
+        height: 5,
+        weight: 20,
+        sprites: {
+            front_default: '../images_pokemon/Resea.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Resea2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 55 },
+            { stat: { name: 'attack' }, base_stat: 55 },
+            { stat: { name: 'defense' }, base_stat: 43 },
+            { stat: { name: 'special-attack' }, base_stat: 75 },
+            { stat: { name: 'special-defense' }, base_stat: 55 },
+            { stat: { name: 'speed' }, base_stat: 55 }
+        ],
+        abilities: [
+            { ability: { name: 'torrent' }, is_hidden: false }
+        ],
+        base_experience: 63
+    };
+    const searir = {
+        id: 8,
+        name: 'searir',
+        height: 10,
+        weight: 55,
+        sprites: {
+            front_default: '../images_pokemon/Searir.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Searir2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 75 },
+            { stat: { name: 'defense' }, base_stat: 53 },
+            { stat: { name: 'special-attack' }, base_stat: 93 },
+            { stat: { name: 'special-defense' }, base_stat: 75 },
+            { stat: { name: 'speed' }, base_stat: 75 }
+        ],
+        abilities: [
+            { ability: { name: 'torrent' }, is_hidden: false }
+        ],
+        base_experience: 146
+    };
+    const kingsea = {
+        id: 9,
+        name: 'kingsea',
+        height: 17,
+        weight: 110,
+        sprites: {
+            front_default: '../images_pokemon/Kingsea.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Kingsea2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'water' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 95 },
+            { stat: { name: 'attack' }, base_stat: 91 },
+            { stat: { name: 'defense' }, base_stat: 55 },
+            { stat: { name: 'special-attack' }, base_stat: 100 },
+            { stat: { name: 'special-defense' }, base_stat: 85 },
+            { stat: { name: 'speed' }, base_stat: 85 }
+        ],
+        abilities: [
+            { ability: { name: 'torrent' }, is_hidden: false }
+        ],
+        base_experience: 248
+    };
+    await mostrarLineaEvolucion([rersea, searir, kingsea]);
+
+    // CUARTA LÍNEA: Tryeno → Tryxrud
+    const tryeno = {
+        id: 10,
+        name: 'tryeno',
+        height: 5,
+        weight: 18,
+        sprites: {
+            front_default: '../images_pokemon/Tryeno.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Tryeno2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 35 },
+            { stat: { name: 'attack' }, base_stat: 62 },
+            { stat: { name: 'defense' }, base_stat: 33 },
+            { stat: { name: 'special-attack' }, base_stat: 37 },
+            { stat: { name: 'special-defense' }, base_stat: 65 },
+            { stat: { name: 'speed' }, base_stat: 65 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 54
+    };
+    const tryxrud = {
+        id: 11,
+        name: 'tryxrud',
+        height: 12,
+        weight: 58,
+        sprites: {
+            front_default: '../images_pokemon/Tryxrud.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Tryxrud2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'electric' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 65 },
+            { stat: { name: 'defense' }, base_stat: 37 },
+            { stat: { name: 'special-attack' }, base_stat: 47 },
+            { stat: { name: 'special-defense' }, base_stat: 105 },
+            { stat: { name: 'speed' }, base_stat: 95 }
+        ],
+        abilities: [
+            { ability: { name: 'static' }, is_hidden: false }
+        ],
+        base_experience: 142
+    };
+    await mostrarLineaEvolucion([tryeno, tryxrud]);
+
+    // QUINTA LÍNEA: Vriniti → Vrutikai → Vristakor
+    const vriniti = {
+        id: 22,
+        name: 'vriniti',
+        height: 4,
+        weight: 15,
+        sprites: {
+            front_default: '../images_pokemon/Vriniti.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Vriniti2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 37 },
+            { stat: { name: 'attack' }, base_stat: 28 },
+            { stat: { name: 'defense' }, base_stat: 45 },
+            { stat: { name: 'special-attack' }, base_stat: 45 },
+            { stat: { name: 'special-defense' }, base_stat: 28 },
+            { stat: { name: 'speed' }, base_stat: 35 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 56
+    };
+    const vrutikai = {
+        id: 23,
+        name: 'vrutikai',
+        height: 9,
+        weight: 45,
+        sprites: {
+            front_default: '../images_pokemon/Vrutikai.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Vrutikai2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 75 },
+            { stat: { name: 'attack' }, base_stat: 50 },
+            { stat: { name: 'defense' }, base_stat: 80 },
+            { stat: { name: 'special-attack' }, base_stat: 62 },
+            { stat: { name: 'special-defense' }, base_stat: 45 },
+            { stat: { name: 'speed' }, base_stat: 75 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 144
+    };
+    const vristakor = {
+        id: 24,
+        name: 'vristakor',
+        height: 15,
+        weight: 90,
+        sprites: {
+            front_default: '../images_pokemon/Vristakor.png',
+            other: {
+                'official-artwork': {
+                    front_default: '../images_pokemon/Vristakor2k.png'
+                }
+            }
+        },
+        types: [
+            { type: { name: 'grass' } }
+        ],
+        stats: [
+            { stat: { name: 'hp' }, base_stat: 110 },
+            { stat: { name: 'attack' }, base_stat: 76 },
+            { stat: { name: 'defense' }, base_stat: 113 },
+            { stat: { name: 'special-attack' }, base_stat: 72 },
+            { stat: { name: 'special-defense' }, base_stat: 64 },
+            { stat: { name: 'speed' }, base_stat: 85 }
+        ],
+        abilities: [
+            { ability: { name: 'overgrow' }, is_hidden: false }
+        ],
+        base_experience: 239
+    };
+    await mostrarLineaEvolucion([vriniti, vrutikai, vristakor]);
+
     const psyduck = await fetchPokemon('psyduck');
     await mostrarLineaEvolucion([psyduck]);
 
@@ -465,7 +716,7 @@ async function abrirDetallesPokemon(pokemonData) {
     console.log('🔍 Abriendo detalles de:', pokemonData);
     
     // Si es un objeto Pokémon custom, usarlo directamente
-    const customPokemons = ['lerxor', 'shainx', 'sturppied', 'stremeflor', 'reyppied', 'flamgor', 'flamaser', 'magmaboar'];
+    const customPokemons = ['lerxor', 'shainx', 'sturppied', 'stremeflor', 'reyppied', 'flamgor', 'flamaser', 'magmaboar', 'rersea', 'searir', 'kingsea', 'tryeno', 'tryxrud', 'vriniti', 'vrutikai', 'vristakor'];
     
     if (typeof pokemonData === 'object' && customPokemons.includes(pokemonData.name)) {
         // Para Shainx, necesitamos datos de especie de Shinx
